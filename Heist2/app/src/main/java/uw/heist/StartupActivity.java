@@ -13,7 +13,9 @@ import android.widget.EditText;
 
 import com.firebase.client.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class StartupActivity extends AppCompatActivity {
@@ -28,8 +30,10 @@ public class StartupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Firebase.setAndroidContext(this);
         userRef = new Firebase("https://sizzling-heat-2181.firebaseio.com/");
-
-        this.persons = new HashMap<String, Boolean>();
+        if (userRef.child("users") == null) {
+            List<Person> users = new ArrayList<>();
+            userRef.setValue(users);
+        }
         setContentView(R.layout.activity_startup);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,17 +73,23 @@ public class StartupActivity extends AppCompatActivity {
     public void makeGuard(View view) {
         EditText box = (EditText) findViewById(R.id.name);
         String name = box.getText().toString();
-        this.persons.put(name, false);
         this.name = name;
-        this.userRef.setValue(this.persons);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put(this.name, false);
+        Map<String, Boolean> person = new HashMap<String, Boolean>();
+        person.put(this.name, false);
+        Firebase user = userRef.child("users").push();
+        user.setValue(person);
+       // Map<String, Map<String, Boolean>> users = new HashMap<String, Map<String, Boolean>>();
+       // users.put(this.name, PersonMap);
+       // userBase.setValue(users);
     }
 
     public void makeThief(View view) {
         EditText box = (EditText) findViewById(R.id.name);
         String name = box.getText().toString();
-        this.persons.put(name, true);
         this.name = name;
-        this.userRef.setValue(this.persons);
+        this.persons.put(name, true);
 
     }
 
