@@ -28,7 +28,7 @@ public class StartupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Firebase.setAndroidContext(this);
         userRef = new Firebase("https://sizzling-heat-2181.firebaseio.com/");
-        if (userRef.)
+
         this.persons = new HashMap<String, Boolean>();
         setContentView(R.layout.activity_startup);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

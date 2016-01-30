@@ -2,4 +2,7 @@
     <string name="app_name">Heist2</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="heist">Heist</string>
+    <string name="start">Start</string>
+    <string name="help">instructions</string>
 </resources>
