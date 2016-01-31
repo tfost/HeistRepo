@@ -1,17 +1,20 @@
 package uw.heist;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.firebase.client.*;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,9 +86,17 @@ public class StartupActivity extends AppCompatActivity {
     }
 
     public void startGame(View view) {
-        Intent intent = new Intent(this.getApplicationContext(), MapsActivity.class);
-       // intent.putExtra("NAME", name);
-       // intent.putExtra("ISTHEIF", this.isTheif);
-        startActivity(intent);
+        GPSTracker gps = new GPSTracker(this);
+        if(gps.canGetLocation()){
+            double lat = gps.getLatitude();
+            double lng = gps.getLongitude();
+            Log.d("GPS", lat + "" + lng);
+            Intent intent = new Intent(this.getApplicationContext(), MapsActivity.class);
+            // intent.putExtra("NAME", name);
+            // intent.putExtra("ISTHEIF", this.isTheif);
+            startActivity(intent);
+        } else {
+            throw new IllegalStateException("location services are not enabled");
+        }
     }
 }
