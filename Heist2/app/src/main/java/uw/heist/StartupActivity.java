@@ -83,9 +83,9 @@ public class StartupActivity extends AppCompatActivity {
     }
 
     public void startGame(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
-        intent.putExtra("NAME", name);
-        intent.putExtra("ISTHEIF", this.isTheif);
-
+        Intent intent = new Intent(this.getApplicationContext(), MapsActivity.class);
+       // intent.putExtra("NAME", name);
+       // intent.putExtra("ISTHEIF", this.isTheif);
+        startActivity(intent);
     }
 }
