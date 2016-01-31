@@ -66,12 +66,7 @@ public class StartupActivity extends AppCompatActivity {
         EditText box = (EditText) findViewById(R.id.name);
         String name = box.getText().toString();
         this.name = name;
-        Map<String, Boolean> map = new HashMap<>();
-        map.put(this.name, false);
-        Map<String, Boolean> person = new HashMap<String, Boolean>();
-        person.put(this.name, false);
-        Firebase user = userRef.child("users").push();
-        user.setValue(person);
+        this.isTheif = false;
        // Map<String, Map<String, Boolean>> users = new HashMap<String, Map<String, Boolean>>();
        // users.put(this.name, PersonMap);
        // userBase.setValue(users);
@@ -81,15 +76,31 @@ public class StartupActivity extends AppCompatActivity {
         EditText box = (EditText) findViewById(R.id.name);
         String name = box.getText().toString();
         this.name = name;
-        this.persons.put(name, true);
+        this.isTheif = true;
 
     }
 
     public void startGame(View view) {
+
         GPSTracker gps = new GPSTracker(this);
         if(gps.canGetLocation()){
             double lat = gps.getLatitude();
             double lng = gps.getLongitude();
+
+            List<Double> points = new ArrayList<>();
+            Map<String, List<Double>> person = new HashMap<>();
+            String s;
+            if (this.isTheif) {
+                s = "theif";
+            } else {
+                s = "guard";
+            }
+            points.add(lat);
+            points.add(lng);
+            person.put(s, points);
+            Firebase user = userRef.child("users").push();
+            user.setValue(person);
+
             Log.d("GPS", lat + "" + lng);
             Intent intent = new Intent(this.getApplicationContext(), MapsActivity.class);
             // intent.putExtra("NAME", name);
