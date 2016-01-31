@@ -1,0 +1,22 @@
+body {
+	background-color: black;
+	color: white;
+	font-family: "Courier", monospace;
+	font-size: 14pt;
+	text-align: center;
+}
+
+h1 {
+	font-size: 54pt;
+	padding-bottom: 2%;
+	margin: auto;		
+}
+
+p {
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+br {
+	display: block;
+}

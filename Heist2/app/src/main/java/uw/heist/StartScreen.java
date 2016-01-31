@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import uw.heist.Instructions;
+
 
 public class StartScreen extends AppCompatActivity {
 
@@ -47,6 +49,11 @@ public class StartScreen extends AppCompatActivity {
 
     public void initGame(View view) {
         Intent intent = new Intent(this.getApplicationContext(), StartupActivity.class);
+        startActivity(intent);
+    }
+
+    public void loadInfo(View view) {
+        Intent intent = new Intent(this.getApplicationContext(), Instructions.class);
         startActivity(intent);
     }
 }
