@@ -24,7 +24,7 @@ import java.util.Map;
 public class StartupActivity extends AppCompatActivity {
     public static final int gameID = 12345;
     private Map<String, Boolean> persons;
-    public Firebase userRef;
+    public static Firebase userRef;
     public String name = "";
     public boolean isTheif;
 

@@ -10,6 +10,10 @@ import android.os.Vibrator;
 import android.widget.TextView;
 import android.os.CountDownTimer;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -72,6 +76,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 // Add radius circle to map
         Circle circle = mMap.addCircle(circleOptions);
+
+        StartupActivity.userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.child("users").getChildren()) {
+                    if (data.hasChild("guard")) { //the user is a guard.
+                        double lat = Double.parseDouble(data.child("guard").child("0").toString());
+                        double lng = Double.parseDouble(data.child("guard").child("1").toString());
+                        //draw a marker at lat,lng
+                        LatLng person = new LatLng(lat, lng);
+                        mMap.addMarker(new MarkerOptions().position(person).title("guard"));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
     }
 
     public void comeHere(View view) {
